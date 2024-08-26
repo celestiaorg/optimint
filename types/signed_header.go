@@ -112,7 +112,7 @@ func validatorsEqual(val1 *cmtypes.Validator, val2 *cmtypes.Validator) bool {
 		return true
 	}
 	// if not, do a field-by-field comparison
-	return val1.PubKey.Equals(val2.PubKey) &&
+	return bytes.Equal(val1.PubKey.Bytes(), val2.PubKey.Bytes()) &&
 		bytes.Equal(val1.Address.Bytes(), val2.Address.Bytes()) &&
 		val1.VotingPower == val2.VotingPower &&
 		val1.ProposerPriority == val2.ProposerPriority

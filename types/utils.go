@@ -1,6 +1,7 @@
 package types
 
 import (
+	"bytes"
 	cryptoRand "crypto/rand"
 	"errors"
 	"fmt"
@@ -439,7 +440,7 @@ func (privKey CometBLSPrivateKey) Equals(o crypto.Key) bool {
 		return false
 	}
 
-	return bls12381.PrivKey(privBytes).Equals(bls12381.PrivKey(rawBytes))
+	return bytes.Equal(bls12381.PrivKey(privBytes).Bytes(), bls12381.PrivKey(rawBytes).Bytes())
 }
 
 // GetPublic returns a public key
@@ -474,7 +475,7 @@ func (pubKey CometBLSPublicKey) Equals(o crypto.Key) bool {
 		return false
 	}
 
-	return bls12381.PubKey(pubBytes).Equals(bls12381.PubKey(rawBytes))
+	return bytes.Equal(bls12381.PubKey(pubBytes).Bytes(), bls12381.PubKey(rawBytes).Bytes())
 }
 
 // Verify compares data to a signature

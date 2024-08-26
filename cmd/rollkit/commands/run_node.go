@@ -94,7 +94,10 @@ func NewRunNodeCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			pval := cometprivval.LoadOrGenFilePV(config.PrivValidatorKeyFile(), config.PrivValidatorStateFile())
+			pval, err := cometprivval.LoadOrGenFilePV(config.PrivValidatorKeyFile(), config.PrivValidatorStateFile(), nil)
+			if err != nil {
+				return err
+			}
 			p2pKey, err := rolltypes.GetNodeKey(nodeKey)
 			if err != nil {
 				return err
@@ -241,7 +244,10 @@ func initFiles() error {
 		logger.Info("Found private validator", "keyFile", cometprivvalKeyFile,
 			"stateFile", cometprivvalStateFile)
 	} else {
-		pv = cometprivval.GenFilePV(cometprivvalKeyFile, cometprivvalStateFile)
+		pv, err := cometprivval.GenFilePV(cometprivvalKeyFile, cometprivvalStateFile, nil)
+		if err != nil {
+			return err
+		}
 		pv.Save()
 		logger.Info("Generated private validator", "keyFile", cometprivvalKeyFile,
 			"stateFile", cometprivvalStateFile)
